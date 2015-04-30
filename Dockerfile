@@ -30,7 +30,7 @@ RUN sed -i -r "s/define\('DB_NAME', '[^']+'\);/define\('DB_NAME', 'wordpress'\);
 RUN sed -i -r "s/define\('DB_USER', '[^']+'\);/define\('DB_USER', 'wordpress'\);/g" /var/www/wp-config.php
 RUN sed -i -r "s/define\('DB_PASSWORD', '[^']+'\);/define\('DB_PASSWORD', 'wordpress'\);/g" /var/www/wp-config.php
 RUN printf '%s\n' "g/put your unique phrase here/d" a "$(curl -sL https://api.wordpress.org/secret-key/1.1/salt/)" . w | ed -s /var/www/wp-config.php
-RUN sed -i -r "s/DocumentRoot\s+\/var\/www\/html/DocumentRoot \/var\/www/g" /etc/apache2/sites-available/000-default.conf
+ADD files/vhost.conf /etc/apache2/sites-available/000-default.conf
 RUN chown -R www-data:www-data /var/www
 RUN sed -i "s/upload_max_filesize = 2M/upload_max_filesize = 20M/" /etc/php5/apache2/php.ini
 
@@ -38,6 +38,12 @@ RUN sed -i "s/upload_max_filesize = 2M/upload_max_filesize = 20M/" /etc/php5/apa
 ## TODO
 # wp-config backup
 RUN ["/bin/bash", "-c", "for f in wp-config.{php~,php.save,old,txt} ; do cp /var/www/wp-config.php /var/www/$f ; done"]
+# robots.txt
+ADD files/robots.txt /var/www/robots.txt
+ADD files/debug.log /var/www/wp-content/debug.log
+ADD files/searchreplacedb2.php /var/www/searchreplacedb2.php
+RUN a2enmod headers
+ADD files/header.conf /etc/apache2/conf-enabled/header.conf
 
 # run
 EXPOSE 80

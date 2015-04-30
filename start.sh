@@ -12,3 +12,5 @@ mysql -u root -e "FLUSH PRIVILEGES;"
 
 source /etc/apache2/envvars
 apache2 -D FOREGROUND
+
+while true; do sleep 1000; done
