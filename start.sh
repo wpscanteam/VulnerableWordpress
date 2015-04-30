@@ -2,6 +2,8 @@
 
 /usr/bin/mysqld_safe &
 sleep 10s
+# allow remote logins
+mysql -u root -e "GRANT ALL ON *.* to root@'%';"
 mysql -u root -e "CREATE DATABASE wordpress;"
 mysql -u root -e "CREATE USER wordpress@localhost;"
 mysql -u root -e "SET PASSWORD FOR wordpress@localhost= PASSWORD('wordpress');"

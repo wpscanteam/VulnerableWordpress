@@ -18,7 +18,8 @@ RUN apt-get -qy install wget ed sed curl apache2 mysql-server php5-mysql php5 li
 RUN sed -Ei 's/^(bind-address|log)/#&/' /etc/mysql/my.cnf
 
 # extract wordpress
-ADD https://wordpress.org/latest.tar.gz /wordpress.tar.gz
+#ADD https://wordpress.org/latest.tar.gz /wordpress.tar.gz
+COPY latest.tar.gz /wordpress.tar.gz
 RUN rm -rf /var/www/
 RUN tar xvzf /wordpress.tar.gz
 RUN mv /wordpress /var/www/
@@ -35,6 +36,8 @@ RUN sed -i "s/upload_max_filesize = 2M/upload_max_filesize = 20M/" /etc/php5/apa
 
 # make it vulnerable
 ## TODO
+# wp-config backup
+RUN ["/bin/bash", "-c", "for f in wp-config.{php~,php.save,old,txt} ; do cp /var/www/wp-config.php /var/www/$f ; done"]
 
 # run
 EXPOSE 80
