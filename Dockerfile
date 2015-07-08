@@ -1,5 +1,5 @@
 FROM ubuntu:latest
-MAINTAINER WPScan Team <wpscanteam@gmail.com>
+MAINTAINER WPScan Team <team@wpscan.org>
 
 ENV DEBIAN_FRONTEND noninteractive
 
