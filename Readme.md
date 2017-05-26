@@ -6,8 +6,8 @@ docker rm vulnerablewordpress
 
 # build and run
 ```
-docker build --rm -t wpscan/vulnerablewordpress .
-docker run --name vulnerablewordpress -d -p 80:80 -p 3306:3306 wpscan/vulnerablewordpress
+docker build --rm -t wpscanteam/vulnerablewordpress .
+docker run --name vulnerablewordpress -d -p 80:80 -p 3306:3306 wpscanteam/vulnerablewordpress
 ```
 
 # Get a shell
